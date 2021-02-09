@@ -1,0 +1,20 @@
+{
+  "name": "project_raycasting_experiment",
+  "version": "0.0.1",
+  "description": "Experimenting with raycasting, goal is to render a 3D-like scene which the user can explore",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpencerWallace007463307/CSE-4500-Spring-21.git"
+  },
+  "author": "Spencer Wallace",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SpencerWallace007463307/CSE-4500-Spring-21/issues"
+  },
+  "homepage": "https://github.com/SpencerWallace007463307/CSE-4500-Spring-21#readme"
+}
