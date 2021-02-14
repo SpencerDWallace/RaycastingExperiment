@@ -138,7 +138,7 @@ function drawRays() {
     vx and vy are the x and y coordinates of the ray checking for vertical contact
      */
     let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 100;
-    ra = pAngle - 0.5;
+    ra = pAngle - 0.5 - (0.5 *(1/6));
     let rr = ra;
 
 
@@ -285,7 +285,7 @@ if(rx >= MS*mapX || ry >= MS*mapX)
         let shading = height*1.2/lineH;
         noStroke();
         fill(170/shading,210/shading,290/shading);
-        rect(r*(width/300), lineOffset,width/300, lineH);
+        rect(r*(width/300), lineOffset,width/250, lineH);
         ra += 0.01/3; rr += 0.01/3
         if(ra > 2*PI)
         ra -= 2*PI;
