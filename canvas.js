@@ -29,18 +29,18 @@ detectMob();
 
 function setup(){
     canvas = createCanvas(width, height);
-    canvas.position(width*0.05, height *0.1);
+    canvas.position(0,0);
 
 }
 
 function detectMob() {
    // alert('Height is: ' + height + ' and width is: ' + width);
     if ( ( height <= 800 ) && ( width <= 600 ) ) {
-        alert('Device is mobile.');
+       // alert('Device is mobile.');
         mob = true;
     }
     else{
-        alert('Device is NOT mobile.');
+       // alert('Device is NOT mobile.');
         mob = false;
     }
 }
