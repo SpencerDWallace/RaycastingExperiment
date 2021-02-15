@@ -9,6 +9,8 @@ let mapSize = Math.floor(height/9); let mapX = 9, mapY = 9;
 let screenWidth  = width - (mapSize*mapX) - 5, screenX = mapSize*mapX;
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
 let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize));
+let mob;
+detectMob();
 
     let map =
         [
@@ -28,7 +30,17 @@ function setup(){
     canvas = createCanvas(width, height);
     canvas.position(width*0.05, height *0.2);
 
+}
 
+function detectMob() {
+    if ( ( width <= 800 ) && ( height <= 600 ) ) {
+        console.log('Device is mobile.');
+        mob = true;
+    }
+    else{
+        console.log('Device is NOT mobile.');
+        mob = false;
+    }
 }
 
 function drawPlayer(){
