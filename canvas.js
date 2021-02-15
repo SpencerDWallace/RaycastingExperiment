@@ -88,6 +88,7 @@ function drawPlayer(){
 function draw(){
     background(70);
     keyPress();
+    mousePress();
     //fill(80,70,50);
     fill(0);
     rect(width, 0, width, height);
@@ -102,10 +103,17 @@ function draw(){
 
 }
 
+function mousePress(){
+
+    if(mouseIsPressed)
+        alert('Mouse is pressed!!');
+
+}
+
 function keyPress() {
 
     if (keyIsPressed) {
-        alert('keyIsPressed!!');
+
         console.log('Player angle is: ' + pAngle);
         if (keyCode === UP_ARROW) {
 
