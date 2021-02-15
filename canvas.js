@@ -49,7 +49,7 @@ function detectMob() {
 
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
     if ( ( window.screen.availWidth <= 800 ) && ( window.screen.availHeight <= 600 ) ) {
-        //alert('Device is mobile.');
+        alert('Load the page on landscape for a better experience.');
         mob = true;
 
     }
