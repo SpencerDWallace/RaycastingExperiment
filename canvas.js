@@ -34,8 +34,8 @@ function setup(){
 }
 
 function detectMob() {
-    alert('Height is: ' + height + ' and width is: ' + width);
-    if ( ( width <= 800 ) && ( height <= 600 ) ) {
+   // alert('Height is: ' + height + ' and width is: ' + width);
+    if ( ( height <= 800 ) && ( width <= 600 ) ) {
         alert('Device is mobile.');
         mob = true;
     }
