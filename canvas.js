@@ -34,11 +34,11 @@ function setup(){
 
 function detectMob() {
     if ( ( width <= 800 ) && ( height <= 600 ) ) {
-        console.log('Device is mobile.');
+        alert('Device is mobile.');
         mob = true;
     }
     else{
-        console.log('Device is NOT mobile.');
+        alert('Device is NOT mobile.');
         mob = false;
     }
 }
