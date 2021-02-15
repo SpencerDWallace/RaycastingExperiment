@@ -54,6 +54,21 @@ function detectMob() {
     }
 }
 
+/*function mobMovement(){
+    if(mob){
+        button = createButton('click me');
+        button.position(19, 19);
+        if (map[floor(((px + pDeltaX)/mapSize) + floor((py + pDeltaY) / mapSize)*mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize)/mapSize) + floor((py + pDeltaY + pSize) / mapSize)*mapX)] !== 1
+            && map[floor(floor((px + pDeltaX)/mapSize) + floor((py + pDeltaY + pSize) / mapSize)*mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize)/mapSize) + floor((py + pDeltaY) / mapSize)*mapX)] !== 1) {
+
+            button.mousePressed(px += pDeltaX,
+            py += pDeltaY);
+
+        }
+
+    }
+}*/
+
 function drawPlayer(){
     while(map[pp] > 0){
         px = random((mapX-2)*mapSize) + mapSize, py = random((mapX-2)*mapSize) + mapSize;
@@ -90,6 +105,7 @@ function draw(){
 function keyPress() {
 
     if (keyIsPressed) {
+        alert('keyIsPressed!!');
         console.log('Player angle is: ' + pAngle);
         if (keyCode === UP_ARROW) {
 
