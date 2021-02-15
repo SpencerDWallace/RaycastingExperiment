@@ -128,7 +128,7 @@ async function mousePressed(){
 
     return false;
 }
-function setM1(){mouseMove = 1};
+function setM1(){mouseMove = 1; alert('You clicked up');};
 function setM2(){mouseMove = 2};
 function setM3(){mouseMove = 3};
 function setM4(){mouseMove = 4};
