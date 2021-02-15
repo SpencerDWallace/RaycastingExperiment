@@ -84,6 +84,7 @@ function drawPlayer(){
 }
 
 function draw(){
+    px = Math.random(width1)*width1;
     background(70);
     keyPressed();
     mousePressed();
