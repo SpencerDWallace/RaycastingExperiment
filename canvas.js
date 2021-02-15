@@ -36,14 +36,14 @@ function setup(){
 }
 
 function detectMob() {
-    // alert('Height is: ' + height + ' and width is: ' + width);
+    //alert('Height is: ' + height + ' and width is: ' + width);
     if ( ( height <= 800 ) && ( width <= 600 ) ) {
-        // alert('Device is mobile.');
+        alert('Height is: ' + height + ' and width is: ' + width + 'Device is mobile.');
         mob = true;
 
     }
     else{
-        // alert('Device is NOT mobile.');
+        alert('Height is: ' + height + ' and width is: ' + width + 'Device is NOT mobile.');
         mob = false;
         width = window.screen.availWidth*0.8* window.devicePixelRatio;
         height = window.screen.availHeight*0.7* window.devicePixelRatio;
