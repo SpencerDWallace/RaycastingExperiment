@@ -11,9 +11,14 @@ let mapSize = Math.floor(height/9); let mapX = 9, mapY = 9;
 let screenWidth  = width1 - (mapSize*mapX) - 5, screenX = mapSize*mapX;
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
 let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize));
-let bH = height/10;
-let bW = width1/6;
 let mouseMove = 0;
+let joystick;
+let jStkOX = jStkX = 5*width1/6;
+let jStkOY = jStkY = height*0.8;
+let jStickDiam = height *0.1, jStickRad = height *0.05;
+let jStkMid = height*0.8 + height *0.05;
+let jYcap, jStkMax = Math.sqrt(600);
+let jStkAngle;
 
 
 
@@ -35,18 +40,7 @@ function setup(){
 
     canvas = createCanvas(width1, height);
     canvas.position(0,0);
-    buttonUp = createButton('');
-    buttonUp.size(width1/6,height*0.1);
-    buttonUp.position(4.5*width1/6, height*0.7);
-    buttonDown = createButton('');
-    buttonDown.size(width1/6,height*0.1);
-    buttonDown.position(4.5*width1/6, height*0.85);
-    buttonLeft = createButton('');
-    buttonLeft.size(width1/6,height*0.05);
-    buttonLeft.position(4*width1/6, height*0.8);
-    buttonRight = createButton('');
-    buttonRight.size(width1/6, height*0.05);
-    buttonRight.position(5*width1/6, height*0.8);
+
 
 }
 
@@ -84,42 +78,78 @@ function drawPlayer(){
 }
 
 function draw(){
-    px = Math.random(width1)*width1;
+
     background(70);
     keyPressed();
-    mousePressed();
-    if(!mouseIsPressed){
-        mouseMove = 0;
-    }
-    else{
-        switch(mouseMove) {
-            case 1:
-                moveUp();
-                break;
-            case 2:
-                moveDown();
-                break;
-            case 3:
-                moveLeft();
-                break;
-            case 4:
-                moveRight();
-                break;
-            default:
-                ;
-        }
-    }
-    //mousePress();
-    //fill(80,70,50);
-    fill(0);
+
     rect(width1, 0, width1, height);
     drawRays();
 
     drawMap();
     drawPlayer();
+    noStroke();
+
+    fill('rgba(10%,10%,10%,0.2)')
+    circle(jStkOX, jStkOY, jStickDiam + 25)
+
+    fill(120);
+    circle(jStkX, jStkY, jStickDiam);
+    fill(0);
+
+    joystickDetection();
+    joystickMovement();
+}
+
+function joystickMovement(){
+    let x, y;
+
+
+    jStkAngle = atan(y/x);
+    if(jStkAngle < 0)
+        jStkAngle += 2*PI;
+    else if(jStkAngle > 2*PI)
+        jStkAngle -= 2*PI;
+    console.log(jStkAngle);
+    if(jStkY < jStkOY - jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
+        moveUp();
+    else if(jStkY > jStkOY + jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
+        moveDown();
+    else if(jStkX > jStkOX + jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
+        moveRight();
+
+    else if(jStkX < jStkOX - jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
+        moveLeft();
 
 }
-async function mousePressed(){
+
+function joystickDetection(){
+    let d;
+    let x;
+    let y;
+    if(mouseIsPressed) {
+        x = mouseX - jStkOX;
+        y = mouseY - jStkOY;
+        x = x * x;
+        y = y * y;
+        if (Math.sqrt(x + y) > jStkMax)
+            d = false;
+        else
+            d = true;
+    }
+    if(mouseIsPressed && d){
+        jStkX = mouseX;
+        jStkY = mouseY;
+
+    }
+    if(!mouseIsPressed){
+        jStkX = jStkOX;
+        jStkY = jStkOY;
+    }
+
+}
+
+
+/*async function mousePressed(){
 
 
     buttonUp.mousePressed(setM1);
@@ -128,7 +158,7 @@ async function mousePressed(){
     buttonRight.mousePressed(setM4);
 
     return false;
-}
+}*/
 function setM1(){mouseMove = 1; alert('You clicked up');};
 function setM2(){mouseMove = 2};
 function setM3(){mouseMove = 3};
@@ -378,4 +408,11 @@ function moveLeft(){
     }
     pDeltaX = cos(pAngle) * 3;
     pDeltaY = sin(pAngle) * 3;
+}
+
+function circlePressed(){
+    if(!mouseReleased()) {
+        if (mouseX > jStkX && mouseY > jStkY && mouseX < jStkX + height * 0.1 && mouseY < jStkY + height * 0.1)
+            return true;
+    }
 }
