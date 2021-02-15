@@ -38,7 +38,7 @@ function setup(){
 
 function detectMob() {
     //alert('Height is: ' + height + ' and width is: ' + width);
-    if( ( window.screen.availWidth <= 800 ) && ( window.screen.availHeight <= 600 ) )  {
+    if( ( window.screen.availWidth <= 800 ) && ( window.screen.availHeight <= 1000 ) )  {
         alert('Height is: ' + window.screen.availHeight + ' and width is: ' + window.screen.availWidth + 'Device is mobile.');
         //width = window.screen.availWidth* window.devicePixelRatio;
         //height = window.screen.availHeight* window.devicePixelRatio;
