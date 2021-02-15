@@ -29,11 +29,12 @@ detectMob();
 
 function setup(){
     canvas = createCanvas(width, height);
-    canvas.position(width*0.05, height *0.2);
+    canvas.position(width*0.05, height *0.1);
 
 }
 
 function detectMob() {
+    alert('Height is: ' + height + ' and width is: ' + width);
     if ( ( width <= 800 ) && ( height <= 600 ) ) {
         alert('Device is mobile.');
         mob = true;
