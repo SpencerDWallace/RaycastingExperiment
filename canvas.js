@@ -95,7 +95,7 @@ function draw(){
     fill(120);
     circle(jStkX, jStkY, jStickDiam);
     fill(0);
-    pAngle -= 0.05;
+   
     joystickDetection();
     joystickMovement();
 }
