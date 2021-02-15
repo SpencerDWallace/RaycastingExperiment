@@ -35,16 +35,16 @@ function setup(){
 
     canvas = createCanvas(width1, height);
     canvas.position(0,0);
-    buttonUp = createButton('UP');
+    buttonUp = createButton();
     buttonUp.size(width1/6,height*0.1);
     buttonUp.position(4.5*width1/6, height*0.7);
-    buttonDown = createButton('Down');
+    buttonDown = createButton();
     buttonDown.size(width1/6,height*0.1);
     buttonDown.position(4.5*width1/6, height*0.85);
-    buttonLeft = createButton('Left');
+    buttonLeft = createButton();
     buttonLeft.size(width1/6,height*0.05);
     buttonLeft.position(4*width1/6, height*0.8);
-    buttonRight = createButton('Right');
+    buttonRight = createButton();
     buttonRight.size(width1/6, height*0.05);
     buttonRight.position(5*width1/6, height*0.8);
 
@@ -52,9 +52,9 @@ function setup(){
 
 
 function detectMob() {
-    alert('Window pixel ratio is: ' + window.devicePixelRatio);
+
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
-    if ( ( window.screen.availWidth <= 800 ) && ( wwindow.screen.availHeight <= 600 ) ) {
+    if ( ( window.screen.availWidth <= 800 ) && ( window.screen.availHeight <= 600 ) ) {
         //alert('Device is mobile.');
         mob = true;
 
@@ -318,7 +318,7 @@ function drawRays() {
 
 
         //Render 3D
-        let w1 = numOfRays*window.devicePixelRatio;
+        let w1 = numOfRays;
         let ca = pAngle - rr; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
 
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
