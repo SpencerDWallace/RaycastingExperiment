@@ -1,7 +1,8 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
 var canvas;
-let width = window.screen.availWidth;
-let height = window.screen.availHeight;
+let width = $(window).width();
+let height = $(window).height();
+
 let mob;
 detectMob();
 
@@ -39,16 +40,16 @@ function detectMob() {
     //alert('Height is: ' + height + ' and width is: ' + width);
     if ( ( height <= 800 ) || ( width <= 600 ) ) {
         alert('Height is: ' + height + ' and width is: ' + width + 'Device is mobile.');
-        width = window.screen.availWidth* window.devicePixelRatio;
-        height = window.screen.availHeight* window.devicePixelRatio;
+        //width = window.screen.availWidth* window.devicePixelRatio;
+        //height = window.screen.availHeight* window.devicePixelRatio;
         mob = true;
 
     }
     else{
         alert('Height is: ' + height + ' and width is: ' + width + 'Device is NOT mobile.');
         mob = false;
-        width = window.screen.availWidth*0.8* window.devicePixelRatio;
-        height = window.screen.availHeight*0.7* window.devicePixelRatio;
+        //width = window.screen.availWidth*0.8* window.devicePixelRatio;
+        //height = window.screen.availHeight*0.7* window.devicePixelRatio;
     }
 }
 
