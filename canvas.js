@@ -1,7 +1,8 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
 var canvas;
-let width = ($(window).width())*0.9;
-let height = ($(window).height()*0.8);
+let width = window.screen.availWidth*0.9;
+let height = window.screen.availHeight*0.8;
+
 
 console.log(height);
 let px = 100 + width*0.05, py = 350 + height *0.2, pSize = 1, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
