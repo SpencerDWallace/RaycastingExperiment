@@ -1,7 +1,7 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
 var canvas;
-let width = window.screen.availWidth*0.9;
-let height = window.screen.availHeight*0.8;
+let width = window.screen.availWidth*0.8* window.devicePixelRatio;
+let height = window.screen.availHeight*0.7* window.devicePixelRatio;
 
 
 console.log(height);
