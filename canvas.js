@@ -1,17 +1,19 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
 var canvas;
-let width = $(window).width();
+let width1 = $(window).width();
 let height = $(window).height();
-
 let mob;
 detectMob();
 
 console.log(height);
-let px = 100 + width*0.05, py = 350 + height *0.2, pSize = 1, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
+let px = 100 + width1*0.05, py = 350 + height *0.2, pSize = 1, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
 let mapSize = Math.floor(height/9); let mapX = 9, mapY = 9;
-let screenWidth  = width - (mapSize*mapX) - 5, screenX = mapSize*mapX;
+let screenWidth  = width1 - (mapSize*mapX) - 5, screenX = mapSize*mapX;
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
 let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize));
+let bH = height/10;
+let bW = width1/6;
+let mouseMove = 0;
 
 
 
@@ -31,43 +33,39 @@ let map =
 
 function setup(){
 
-    canvas = createCanvas(width, height);
+    canvas = createCanvas(width1, height);
     canvas.position(0,0);
+    buttonUp = createButton('UP');
+    buttonUp.size(width1/6,height*0.1);
+    buttonUp.position(4.5*width1/6, height*0.7);
+    buttonDown = createButton('Down');
+    buttonDown.size(width1/6,height*0.1);
+    buttonDown.position(4.5*width1/6, height*0.85);
+    buttonLeft = createButton('Left');
+    buttonLeft.size(width1/6,height*0.05);
+    buttonLeft.position(4*width1/6, height*0.8);
+    buttonRight = createButton('Right');
+    buttonRight.size(width1/6, height*0.05);
+    buttonRight.position(5*width1/6, height*0.8);
 
 }
 
-function detectMob() {
 
-    //alert('Height is: ' + height + ' and width is: ' + width);
-    if( ( window.screen.availWidth <= 800 ) && ( window.screen.availHeight <= 1000 ) )  {
-        alert('Height is: ' + window.screen.availHeight + ' and width is: ' + window.screen.availWidth + 'Device is mobile.');
-        //width = window.screen.availWidth* window.devicePixelRatio;
-        //height = window.screen.availHeight* window.devicePixelRatio;
+function detectMob() {
+    alert('Window pixel ratio is: ' + window.devicePixelRatio);
+    //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
+    if ( ( window.screen.availWidth <= 800 ) && ( wwindow.screen.availHeight <= 600 ) ) {
+        //alert('Device is mobile.');
         mob = true;
 
     }
     else{
-        alert('Height is: ' + window.screen.availHeight + ' and width is: ' + window.screen.availWidth + 'Device is NOT mobile.');
+        // alert('Device is NOT mobile.');
         mob = false;
-        //width = window.screen.availWidth*0.8* window.devicePixelRatio;
+        // width1 = window.screen.availWidth*0.8* window.devicePixelRatio;
         //height = window.screen.availHeight*0.7* window.devicePixelRatio;
     }
 }
-
-/*function mobMovement(){
-    if(mob){
-        button = createButton('click me');
-        button.position(19, 19);
-        if (map[floor(((px + pDeltaX)/mapSize) + floor((py + pDeltaY) / mapSize)*mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize)/mapSize) + floor((py + pDeltaY + pSize) / mapSize)*mapX)] !== 1
-            && map[floor(floor((px + pDeltaX)/mapSize) + floor((py + pDeltaY + pSize) / mapSize)*mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize)/mapSize) + floor((py + pDeltaY) / mapSize)*mapX)] !== 1) {
-
-            button.mousePressed(px += pDeltaX,
-            py += pDeltaY);
-
-        }
-
-    }
-}*/
 
 function drawPlayer(){
     while(map[pp] > 0){
@@ -87,69 +85,64 @@ function drawPlayer(){
 
 function draw(){
     background(70);
-    keyPress();
-    mousePress();
+    keyPressed();
+    mousePressed();
+    if(!mouseIsPressed){
+        mouseMove = 0;
+    }
+    else{
+        switch(mouseMove) {
+            case 1:
+                moveUp();
+                break;
+            case 2:
+                moveDown();
+                break;
+            case 3:
+                moveLeft();
+                break;
+            case 4:
+                moveRight();
+                break;
+            default:
+                ;
+        }
+    }
+    //mousePress();
     //fill(80,70,50);
     fill(0);
-    rect(width, 0, width, height);
+    rect(width1, 0, width1, height);
     drawRays();
 
-     drawMap();
+    drawMap();
     drawPlayer();
-//    strokeWeight(1);
-   // fill(0);
-   // rect(0,0, floor(mapSize)*mapX, height);
-
 
 }
+async function mousePressed(){
 
-function mousePress(){
 
-    if(mouseIsPressed)
-        alert('Mouse is pressed!!');
+    buttonUp.mousePressed(setM1);
+    buttonDown.mousePressed(setM2);
+    buttonLeft.mousePressed(setM3);
+    buttonRight.mousePressed(setM4);
 
+    return false;
 }
+function setM1(){mouseMove = 1};
+function setM2(){mouseMove = 2};
+function setM3(){mouseMove = 3};
+function setM4(){mouseMove = 4};
 
-function keyPress() {
 
+
+function keyPressed() {
     if (keyIsPressed) {
+        if (keyCode === UP_ARROW) moveUp();
+        else if (keyCode === DOWN_ARROW) moveDown();
+        else if (keyCode === LEFT_ARROW) moveLeft();
+        else if (keyCode === RIGHT_ARROW) moveRight();
 
-        console.log('Player angle is: ' + pAngle);
-        if (keyCode === UP_ARROW) {
-
-            if (map[floor(((px + pDeltaX)/mapSize) + floor((py + pDeltaY) / mapSize)*mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize)/mapSize) + floor((py + pDeltaY + pSize) / mapSize)*mapX)] !== 1
-                && map[floor(floor((px + pDeltaX)/mapSize) + floor((py + pDeltaY + pSize) / mapSize)*mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize)/mapSize) + floor((py + pDeltaY) / mapSize)*mapX)] !== 1) {
-
-                px += pDeltaX;
-                py += pDeltaY;
-            }
-        } else if (keyCode === DOWN_ARROW) {
-            if (map[(floor((py - pDeltaY) / mapSize)*mapX) + floor((px - pDeltaX) / mapSize)] !== 1 && map[(floor((py - pDeltaY + pSize) / mapSize)*mapX) + floor((px - pDeltaX + pSize) / mapSize)] !== 1
-                && map[(floor((py - pDeltaY + pSize) / mapSize)*mapX) + floor((px - pDeltaX) / mapSize)] !== 1 && map[(floor((py - pDeltaY) / mapSize)*mapX) + floor((px - pDeltaX + pSize) / mapSize)] !== 1) {
-
-                px -= pDeltaX;
-                py -= pDeltaY;
-            }
-        } else if (keyCode === LEFT_ARROW) {
-            pAngle -= 0.05;
-            if (pAngle < 0) {
-                pAngle += 2 * PI;
-            }
-            pDeltaX = cos(pAngle) * 3;
-            pDeltaY = sin(pAngle) * 3;
-
-        } else if (keyCode === RIGHT_ARROW) {
-            pAngle += 0.05;
-            if (pAngle > 2 * PI) {
-                pAngle -= 2 * PI;
-            }
-            pDeltaX = cos(pAngle) * 3;
-            pDeltaY = sin(pAngle) * 3;
-
-        }
-
-        return false;
-    }
+    }return false;
 }
 
 
@@ -162,7 +155,7 @@ function drawMap(){
             if(map[y*mapX+x] === 1){fill(170,210,290);}
             else fill(80,70,50);
             stroke(150);
-           // strokeWeight(1);
+            // strokeWeight(1);
             xOffset = floor(x*MS/3); yOffset = floor(y*MS/3);
             rect(xOffset,yOffset, MS/3,MS/3);
         }
@@ -171,7 +164,7 @@ function drawMap(){
 
 function distt(a, b){
     let d = (Math.sqrt(a*a + b*b))
-   // console.log("sqrt is: " + d)
+    // console.log("sqrt is: " + d)
     return d;
 }
 
@@ -184,21 +177,21 @@ function drawRays() {
     hx and hy are the x and y coordinates of the ray checking for horizontal contact,
     vx and vy are the x and y coordinates of the ray checking for vertical contact
      */
-    let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 100;
-    ra = pAngle - 0.5 - (0.5 *(1/6));
+    let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
+    ra = pAngle - 0.5;
     let rr = ra;
 
 
 
-        //for horizontal
-let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
-    for(r = 0; r < 300; r++) {
+    //for horizontal
+    let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
+    for(r = 0; r < numOfRays; r++) {
 
         disH = 10000, disV = 10000
         dof = 0;
         //checking horizontals
         aTan = -(1 / tan(ra));
-       // looking down
+        // looking down
         if (ra < PI && ra > 0) {
             ry = (floor(py / MS) + 1) * MS +0.01;
             rx = (py - ry) * aTan + px;
@@ -206,7 +199,7 @@ let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
             xOffset = -1* yOffset * aTan;
         }
         //looking up
-       else if (ra > PI && ra < 2*PI) {
+        else if (ra > PI && ra < 2*PI) {
             ry = floor(py / MS) * MS - 1;
             rx = (py - ry) * aTan + px;
             yOffset = -MS;
@@ -216,8 +209,8 @@ let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
             ry = py;
             dof = mapX;
         }
-if(rx >= MS*mapX || ry >= MS*mapX)
-    dof=8;
+        if(rx >= MS*mapX || ry >= MS*mapX)
+            dof=8;
         while (dof < mapX) {
 
             mx = floor(rx / MS);
@@ -240,13 +233,13 @@ if(rx >= MS*mapX || ry >= MS*mapX)
             }
         }
 
-     //   console.log("mp is: " + mp);
+        //   console.log("mp is: " + mp);
 
-      /*  strokeWeight(3);
-       stroke(0,255,0);
-        if(r==99)
-            stroke(255,0,0);
-        line(px, py, rx, ry);*/
+        /*  strokeWeight(3);
+         stroke(0,255,0);
+          if(r==99)
+              stroke(255,0,0);
+          line(px, py, rx, ry);*/
 
 
         //checking verticals
@@ -278,7 +271,7 @@ if(rx >= MS*mapX || ry >= MS*mapX)
             my = floor(ry / MS);
             mp = floor(my * mapX + mx);
             if (mp >= 0 && mp < mapX * mapY && map[mp] > 0) {
-               // console.log("mp vert is: " + mp);
+                // console.log("mp vert is: " + mp);
                 vx = rx;
                 vy = ry;
                 disV = distt(px - vx, py - vy);
@@ -290,13 +283,13 @@ if(rx >= MS*mapX || ry >= MS*mapX)
             }
         }
 
-       /* stroke(255,0,0);
-        strokeWeight(2);
-        if(r==99)
-            stroke(0,255,0);
-        line(px, py, rx, ry);*/
+        /* stroke(255,0,0);
+         strokeWeight(2);
+         if(r==99)
+             stroke(0,255,0);
+         line(px, py, rx, ry);*/
 
-        if (disV < disH) {
+        if (disV <= disH) {
 
 
             rx = vx; ry = vy;
@@ -305,8 +298,8 @@ if(rx >= MS*mapX || ry >= MS*mapX)
 
         } else if (disH < disV){
 
-                rx = hx;
-                ry = hy;
+            rx = hx;
+            ry = hy;
 
             distFinal = disH;
         }
@@ -325,8 +318,7 @@ if(rx >= MS*mapX || ry >= MS*mapX)
 
 
         //Render 3D
-        let w1 = 300/window.devicePixelRatio;
-        let w2 = 250/window.devicePixelRatio;
+        let w1 = numOfRays*window.devicePixelRatio;
         let ca = pAngle - rr; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
 
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
@@ -334,18 +326,55 @@ if(rx >= MS*mapX || ry >= MS*mapX)
         let shading = height*1.2/lineH;
         noStroke();
         fill(170/shading,210/shading,290/shading);
-        rect(r*(width/(w1)), lineOffset,width/(w2), lineH);
-        ra += 0.01/3; rr += 0.01/3
+        rect(r*(width1/w1), lineOffset, width1/w1, lineH);
+        ra += 0.5/(numOfRays/2); rr += 0.5/(numOfRays/2);
         if(ra > 2*PI)
-        ra -= 2*PI;
+            ra -= 2*PI;
         if(ra <0)
             ra += 2*PI;
 
         strokeWeight(1);
         stroke(255,0,0);
-        line(px/3, py/3, rx/3, ry/3);
+        //line(px/3, py/3, rx/3, ry/3);
     }
 
 
 }
 
+
+function moveUp() {
+    if (map[floor(((px + pDeltaX) / mapSize) + floor((py + pDeltaY) / mapSize) * mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize) / mapSize) + floor((py + pDeltaY + pSize) / mapSize) * mapX)] !== 1
+        && map[floor(floor((px + pDeltaX) / mapSize) + floor((py + pDeltaY + pSize) / mapSize) * mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize) / mapSize) + floor((py + pDeltaY) / mapSize) * mapX)] !== 1) {
+
+        px += pDeltaX;
+        py += pDeltaY;
+    }
+}
+
+function moveDown() {
+    if (map[(floor((py - pDeltaY) / mapSize) * mapX) + floor((px - pDeltaX) / mapSize)] !== 1 && map[(floor((py - pDeltaY + pSize) / mapSize) * mapX) + floor((px - pDeltaX + pSize) / mapSize)] !== 1
+        && map[(floor((py - pDeltaY + pSize) / mapSize) * mapX) + floor((px - pDeltaX) / mapSize)] !== 1 && map[(floor((py - pDeltaY) / mapSize) * mapX) + floor((px - pDeltaX + pSize) / mapSize)] !== 1) {
+
+        px -= pDeltaX;
+        py -= pDeltaY;
+    }
+}
+
+function moveRight(){
+    pAngle += 0.05;
+    if (pAngle > 2 * PI) {
+        pAngle -= 2 * PI;
+    }
+    pDeltaX = cos(pAngle) * 3;
+    pDeltaY = sin(pAngle) * 3;
+}
+
+
+function moveLeft(){
+    pAngle -= 0.05;
+    if (pAngle < 0) {
+        pAngle += 2 * PI;
+    }
+    pDeltaX = cos(pAngle) * 3;
+    pDeltaY = sin(pAngle) * 3;
+}
