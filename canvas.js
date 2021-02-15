@@ -95,7 +95,7 @@ function draw(){
     fill(120);
     circle(jStkX, jStkY, jStickDiam);
     fill(0);
-
+    pAngle -= 0.05;
     joystickDetection();
     joystickMovement();
 }
@@ -111,7 +111,8 @@ function joystickMovement(){
         jStkAngle -= 2*PI;
     console.log(jStkAngle);
     if(jStkY < jStkOY - jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
-        moveUp();
+        alert('Move up!');
+        //moveUp();
     else if(jStkY > jStkOY + jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
         moveDown();
     else if(jStkX > jStkOX + jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
