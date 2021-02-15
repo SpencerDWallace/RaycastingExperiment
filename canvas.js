@@ -1,8 +1,9 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
 var canvas;
-let width = window.screen.availWidth*0.8* window.devicePixelRatio;
-let height = window.screen.availHeight*0.7* window.devicePixelRatio;
-
+let width = window.screen.availWidth* window.devicePixelRatio;
+let height = window.screen.availHeight* window.devicePixelRatio;
+let mob;
+detectMob();
 
 console.log(height);
 let px = 100 + width*0.05, py = 350 + height *0.2, pSize = 1, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
@@ -10,38 +11,42 @@ let mapSize = Math.floor(height/9); let mapX = 9, mapY = 9;
 let screenWidth  = width - (mapSize*mapX) - 5, screenX = mapSize*mapX;
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
 let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize));
-let mob;
-detectMob();
 
-    let map =
-        [
-            1,1,1,1,1,1,1,1,1,
-            1,0,0,0,1,0,0,0,1,
-            1,0,0,0,1,0,0,0,1,
-            1,0,0,0,1,0,0,0,1,
-            1,0,0,0,0,0,0,0,1,
-            1,1,0,0,1,1,1,1,1,
-            1,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,1,
-            1,1,1,1,1,1,1,1,1
-        ];
+
+
+let map =
+    [
+        1,1,1,1,1,1,1,1,1,
+        1,0,0,0,1,0,0,0,1,
+        1,0,0,0,1,0,0,0,1,
+        1,0,0,0,1,0,0,0,1,
+        1,0,0,0,0,0,0,0,1,
+        1,1,0,0,1,1,1,1,1,
+        1,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,1,
+        1,1,1,1,1,1,1,1,1
+    ];
 
 
 function setup(){
+
     canvas = createCanvas(width, height);
     canvas.position(0,0);
 
 }
 
 function detectMob() {
-   // alert('Height is: ' + height + ' and width is: ' + width);
+    // alert('Height is: ' + height + ' and width is: ' + width);
     if ( ( height <= 800 ) && ( width <= 600 ) ) {
-       // alert('Device is mobile.');
+        // alert('Device is mobile.');
         mob = true;
+
     }
     else{
-       // alert('Device is NOT mobile.');
+        // alert('Device is NOT mobile.');
         mob = false;
+        width = window.screen.availWidth*0.8* window.devicePixelRatio;
+        height = window.screen.availHeight*0.7* window.devicePixelRatio;
     }
 }
 
