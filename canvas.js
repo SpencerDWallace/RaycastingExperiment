@@ -37,6 +37,7 @@ function setup(){
 }
 
 function detectMob() {
+
     //alert('Height is: ' + height + ' and width is: ' + width);
     if( ( window.screen.availWidth <= 800 ) && ( window.screen.availHeight <= 1000 ) )  {
         alert('Height is: ' + window.screen.availHeight + ' and width is: ' + window.screen.availWidth + 'Device is mobile.');
@@ -300,6 +301,8 @@ if(rx >= MS*mapX || ry >= MS*mapX)
 
 
         //Render 3D
+        let w1 = 300/window.devicePixelRatio;
+        let w2 = 250/window.devicePixelRatio;
         let ca = pAngle - rr; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
 
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
@@ -307,7 +310,7 @@ if(rx >= MS*mapX || ry >= MS*mapX)
         let shading = height*1.2/lineH;
         noStroke();
         fill(170/shading,210/shading,290/shading);
-        rect(r*(width/300), lineOffset,width/250, lineH);
+        rect(r*(width/(w1*window.devicePixelRatio)), lineOffset,width/(w2*window.devicePixelRatio), lineH);
         ra += 0.01/3; rr += 0.01/3
         if(ra > 2*PI)
         ra -= 2*PI;
