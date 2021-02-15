@@ -310,7 +310,7 @@ if(rx >= MS*mapX || ry >= MS*mapX)
         let shading = height*1.2/lineH;
         noStroke();
         fill(170/shading,210/shading,290/shading);
-        rect(r*(width/(w1*window.devicePixelRatio)), lineOffset,width/(w2*window.devicePixelRatio), lineH);
+        rect(r*(width/(w1)), lineOffset,width/(w2), lineH);
         ra += 0.01/3; rr += 0.01/3
         if(ra > 2*PI)
         ra -= 2*PI;
