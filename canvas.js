@@ -35,16 +35,16 @@ function setup(){
 
     canvas = createCanvas(width1, height);
     canvas.position(0,0);
-    buttonUp = createButton();
+    buttonUp = createButton('');
     buttonUp.size(width1/6,height*0.1);
     buttonUp.position(4.5*width1/6, height*0.7);
-    buttonDown = createButton();
+    buttonDown = createButton('');
     buttonDown.size(width1/6,height*0.1);
     buttonDown.position(4.5*width1/6, height*0.85);
-    buttonLeft = createButton();
+    buttonLeft = createButton('');
     buttonLeft.size(width1/6,height*0.05);
     buttonLeft.position(4*width1/6, height*0.8);
-    buttonRight = createButton();
+    buttonRight = createButton('');
     buttonRight.size(width1/6, height*0.05);
     buttonRight.position(5*width1/6, height*0.8);
 
