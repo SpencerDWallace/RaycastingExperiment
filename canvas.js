@@ -17,7 +17,7 @@ let jStkOX = jStkX = 5*width1/6;
 let jStkOY = jStkY = height*0.8;
 let jStickDiam = height *0.1, jStickRad = height *0.05;
 let jStkMid = height*0.8 + height *0.05;
-let jYcap, jStkMax = Math.sqrt(600*window.devicePixelRatio);
+let jYcap, jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
 let jStkAngle;
 
 
