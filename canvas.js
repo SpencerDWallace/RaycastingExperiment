@@ -122,6 +122,7 @@ function joystickMovement(){
     else if(jStkX < jStkOX - jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
         moveLeft();
     */
+    jStkRatio - 0.2;
     if(jStkRatio < 0.1)
         jStkRatio = 0;
     if(x > 0)
