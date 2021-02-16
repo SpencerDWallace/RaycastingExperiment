@@ -1,14 +1,6 @@
-//HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
-function noScroll() {
-    window.scrollTo(0, 0);
-}
-
-// add listener to disable scroll
-window.addEventListener('scroll', noScroll);
-
 var canvas;
-let width1 = window.screen.availWidth*window.devicePixelRatio;
-let height = window.screen.availHeight*window.devicePixelRatio;
+let width1 = $(window).width();
+let height = $(window).height();
 let mob;
 detectMob();
 
