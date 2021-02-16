@@ -130,9 +130,9 @@ function joystickMovement(){
     pDeltaX = cos(pAngle) * moveSpeed;
     pDeltaY = sin(pAngle) * moveSpeed;
 
-    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/(window.devicePixelRatio*4) && jStkX > jStkOX - jStickRad/(window.devicePixelRatio*4) )
+    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/(3/window.devicePixelRatio) && jStkX > jStkOX - jStickRad/(3/window.devicePixelRatio) )
         moveUp();
-    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/(window.devicePixelRatio*4) && jStkX > jStkOX - jStickRad/(window.devicePixelRatio*4) )
+    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/(3/window.devicePixelRatio) && jStkX > jStkOX - jStickRad/(3/window.devicePixelRatio) )
         moveDown();
     jStkRatio - 0.4;
     if(jStkRatio < 0.1)
