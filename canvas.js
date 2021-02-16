@@ -101,8 +101,10 @@ function draw(){
 }
 
 function joystickMovement(){
-    let x, y;
-
+    let x, y, jStkRatio;
+    x = jStkOX - jStkX;
+    y = jStkY - jStkOY;
+    jStkRatio = Math.abs(x/jStickRad);
 
     jStkAngle = atan(y/x);
     if(jStkAngle < 0)
@@ -114,11 +116,24 @@ function joystickMovement(){
         moveUp();
     else if(jStkY > jStkOY + jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
         moveDown();
-    else if(jStkX > jStkOX + jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
+    /*else if(jStkX > jStkOX + jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
         moveRight();
 
     else if(jStkX < jStkOX - jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
         moveLeft();
+    */
+    if(jStkRatio < 0.1)
+        jStkRatio = 0;
+    if(x > 0)
+        pAngle -= 0.06*jStkRatio/window.devicePixelRatio;
+    else if(x < 0)
+        pAngle += 0.06*jStkRatio/window.devicePixelRatio;
+    if (pAngle < 0) {
+        pAngle += 2 * PI;
+    }
+    pDeltaX = cos(pAngle) * 2;
+    pDeltaY = sin(pAngle) * 2;
+
 
 }
 
@@ -331,7 +346,7 @@ function drawRays() {
 
 
         //Render 3D
-        let w1 = numOfRays;
+        let w1 = numOfRays*window.devicePixelRatio;
         let ca = pAngle - rr; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
 
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
@@ -378,8 +393,8 @@ function moveRight(){
     if (pAngle > 2 * PI) {
         pAngle -= 2 * PI;
     }
-    pDeltaX = cos(pAngle) * 3;
-    pDeltaY = sin(pAngle) * 3;
+    pDeltaX = cos(pAngle) * 2;
+    pDeltaY = sin(pAngle) * 2;
 }
 
 
@@ -388,8 +403,8 @@ function moveLeft(){
     if (pAngle < 0) {
         pAngle += 2 * PI;
     }
-    pDeltaX = cos(pAngle) * 3;
-    pDeltaY = sin(pAngle) * 3;
+    pDeltaX = cos(pAngle) * 2;
+    pDeltaY = sin(pAngle) * 2;
 }
 
 function circlePressed(){
