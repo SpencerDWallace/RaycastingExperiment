@@ -1,10 +1,14 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
-$(document).bind(
-    'touchmove',
-    function(e) {
-        e.preventDefault();
-    }
-);
+function preventDefault(e){
+    e.preventDefault();
+}
+
+function disableScroll(){
+    document.body.addEventListener('touchmove', preventDefault, { passive: false });
+}
+function enableScroll(){
+    document.body.removeEventListener('touchmove', preventDefault);
+}
 var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
