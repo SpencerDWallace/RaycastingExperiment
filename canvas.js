@@ -1,4 +1,6 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
+$('body').bind('touchmove', function(e){e.preventDefault()});
+
 var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
