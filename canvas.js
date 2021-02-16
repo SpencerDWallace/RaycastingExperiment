@@ -78,6 +78,7 @@ function drawPlayer(){
 }
 
 function draw(){
+    width1 = $(window).width(); height = $(window).height();
 
     background(70);
     keyPressed();
