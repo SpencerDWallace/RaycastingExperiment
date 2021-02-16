@@ -3,7 +3,7 @@ var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
 let mob;
-//detectMob();
+detectMob();
 
 console.log(height);
 let px = 100 + width1*0.05, py = 350 + height *0.2, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
@@ -55,7 +55,7 @@ function setup(){
 }
 
 
-/*function detectMob() {
+function detectMob() {
 
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
     if ( window.devicePixelRatio > 1.5 ) {
@@ -69,7 +69,7 @@ function setup(){
         // width1 = window.screen.availWidth*0.8* window.devicePixelRatio;
         //height = window.screen.availHeight*0.7* window.devicePixelRatio;
     }
-}*/
+}
 
 function drawPlayer(){
     while(map[pp] > 0){
@@ -130,9 +130,9 @@ function joystickMovement(){
     pDeltaX = cos(pAngle) * moveSpeed;
     pDeltaY = sin(pAngle) * moveSpeed;
 
-    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/4 && jStkX > jStkOX - jStickRad/4 )
+    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/(window.devicePixelRatio*4) && jStkX > jStkOX - jStickRad/(window.devicePixelRatio*4) )
         moveUp();
-    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/4 && jStkX > jStkOX - jStickRad/4 )
+    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/(window.devicePixelRatio*4) && jStkX > jStkOX - jStickRad/(window.devicePixelRatio*4) )
         moveDown();
     jStkRatio - 0.4;
     if(jStkRatio < 0.1)
@@ -360,15 +360,18 @@ function drawRays() {
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
         let lineOffset = height/2 - lineH/2;
 
-        let shading = (height/lineH)/(3*sin(pie));
+        let shading = (height/lineH)/(5*sin(pie));
         pie += PI/numOfRays
 
         /*if(r >= numOfRays/3 && r < (2*numOfRays)/3)*/
         // shading += Math.abs(10*ca);
         /*shading = distFinal*cos(ca);*/
+        let red = 80/shading; if(red > 170) red = 170;
+        let green = 150/shading; if(green > 250) green = 250;
+        let blue = 90/shading; if(blue > 200) blue = 200;
         strokeWeight(1);
-        stroke(80/shading,150/shading,90/shading);
-        fill(80/shading,150/shading,90/shading);
+        stroke(red, green, blue);
+        fill(red, green, blue);
         rect(r*(width1/w1), lineOffset, width1/w1, lineH);
         if(rr > 2*PI)
             rr -= 2*PI;
