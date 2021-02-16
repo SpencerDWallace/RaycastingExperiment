@@ -346,7 +346,7 @@ function drawRays() {
 
 
         //Render 3D
-        let w1 = numOfRays*window.devicePixelRatio;
+        let w1 = numOfRays;
         let ca = pAngle - rr; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
 
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
