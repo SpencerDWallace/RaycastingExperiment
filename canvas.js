@@ -6,11 +6,11 @@ let mob;
 //detectMob();
 
 console.log(height);
-let px = 100 + width1*0.05, py = 350 + height *0.2, pSize = 1, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
-let mapSize = Math.floor(height/9); let mapX = 9, mapY = 9;
+let px = 100 + width1*0.05, py = 350 + height *0.2, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
+let mapX = 20, mapY = 20; let mapSize = Math.floor(height/mapX);
 let screenWidth  = width1 - (mapSize*mapX) - 5, screenX = mapSize*mapX;
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
-let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize));
+let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize)), pSize = 2;
 let mouseMove = 0;
 let joystick;
 let jStkOX = jStkX = 5*width1/6;
@@ -23,15 +23,26 @@ let mSpdO = moveSpeed = height*0.004;
 
 let map =
     [
-        1,1,1,1,1,1,1,1,1,
-        1,0,0,0,1,0,0,0,1,
-        1,0,0,0,1,0,1,0,1,
-        1,0,1,0,1,0,0,0,1,
-        1,0,0,0,0,0,0,0,1,
-        1,1,0,0,1,1,1,1,1,
-        1,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,1,
-        1,1,1,1,1,1,1,1,1
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+        1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,1,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,
+        1,0,0,1,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,
+        1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,
+        1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,1,1,1,
+        1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
     ];
 
 
@@ -69,10 +80,11 @@ function drawPlayer(){
     fill(320,240,64);
     //square(px,py, pSize);
     //strokeWeight(1);
-    fill(255,0,0);
-    square(px/3,py/3,2);
+    // fill(255,0,0);
+    square(px/3,py/3,pSize);
     stroke(255,0,0);
-    line(px/3 + 1,py/3 - 1,px/3 +pDeltaX*5,py/3 + pDeltaY*5);
+    strokeWeight(2);
+    line(px/3 + pSize/2,py/3 + pSize/2,px/3 +pDeltaX*mapX,py/3 + pDeltaY*mapX);
 
 }
 
@@ -95,6 +107,7 @@ function draw(){
     fill(170,250,200);
     circle(jStkX, jStkY, jStickDiam);
     fill(0);
+    noStroke();
 
     joystickDetection();
     joystickMovement();
@@ -117,9 +130,9 @@ function joystickMovement(){
     pDeltaX = cos(pAngle) * moveSpeed;
     pDeltaY = sin(pAngle) * moveSpeed;
 
-    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
+    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/4 && jStkX > jStkOX - jStickRad/4 )
         moveUp();
-    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
+    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/4 && jStkX > jStkOX - jStickRad/4 )
         moveDown();
     jStkRatio - 0.4;
     if(jStkRatio < 0.1)
@@ -185,7 +198,9 @@ function keyPressed() {
         if (keyIsDown(LEFT_ARROW)) moveLeft();
         if (keyIsDown(RIGHT_ARROW)) moveRight();
 
-    }return false;
+    }
+
+    return false;
 }
 
 function drawMap(){
@@ -221,7 +236,7 @@ function drawRays() {
     let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
     ra = pAngle - 0.5;
     let rr = 0.5;
-    let pie = 0;
+    let pie = PI/numOfRays;
 
     //for horizontal
     let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
