@@ -1,4 +1,10 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
+$(document).bind(
+    'touchmove',
+    function(e) {
+        e.preventDefault();
+    }
+);
 var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
@@ -84,7 +90,7 @@ function drawPlayer(){
     square(px/3,py/3,pSize);
     stroke(255,0,0);
     strokeWeight(2);
-    line(px/3 + pSize/2,py/3 + pSize/2,px/3 +pDeltaX*mapX,py/3 + pDeltaY*mapX);
+    line(px/3 + pSize/2,py/3 + pSize/2,px/3 +pDeltaX*(mapSize*2/mapX),py/3 + pDeltaY*(mapSize*2/mapX));
 
 }
 
@@ -130,9 +136,9 @@ function joystickMovement(){
     pDeltaX = cos(pAngle) * moveSpeed;
     pDeltaY = sin(pAngle) * moveSpeed;
 
-    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/(3/window.devicePixelRatio) && jStkX > jStkOX - jStickRad/(3/window.devicePixelRatio) )
+    if(jStkY < jStkOY  && jStkY < jStkOY + jStickRad/(3*window.devicePixelRatio))// && jStkY < jStkOY - jStickRad/(3*window.devicePixelRatio) )
         moveUp();
-    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/(3/window.devicePixelRatio) && jStkX > jStkOX - jStickRad/(3/window.devicePixelRatio) )
+    else if(jStkY > jStkOY  && jStkY > jStkOY + jStickRad/(3*window.devicePixelRatio))// && jStkY < jStkOY - jStickRad/(3*window.devicePixelRatio) )
         moveDown();
     jStkRatio - 0.4;
     if(jStkRatio < 0.1)
@@ -255,7 +261,7 @@ function drawRays() {
         }
         //looking up
         else if (ra > PI && ra < 2*PI) {
-            ry = floor(py / MS) * MS - 1;
+            ry = floor(py / MS) * MS - 0.01;
             rx = (py - ry) * aTan + px;
             yOffset = -MS;
             xOffset = -1 * yOffset * aTan;
