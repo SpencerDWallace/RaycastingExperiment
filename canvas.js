@@ -1,5 +1,10 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
-$('body').bind('touchmove', function(e){e.preventDefault()});
+function noScroll() {
+    window.scrollTo(0, 0);
+}
+
+// add listener to disable scroll
+window.addEventListener('scroll', noScroll);
 
 var canvas;
 let width1 = $(window).width();
