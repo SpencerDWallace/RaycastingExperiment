@@ -48,7 +48,7 @@ function setup(){
 function detectMob() {
 
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
-    if ( ( window.screen.availWidth <= 800 ) && ( window.screen.availHeight <= 600 ) ) {
+    if ( ( window.screen.availWidth <= 1000 ) && ( window.screen.availHeight <= 800 ) ) {
         alert('Load the page on landscape for a better experience.');
         mob = true;
 
@@ -147,24 +147,6 @@ function joystickDetection(){
     }
 
 }
-
-
-/*async function mousePressed(){
-
-
-    buttonUp.mousePressed(setM1);
-    buttonDown.mousePressed(setM2);
-    buttonLeft.mousePressed(setM3);
-    buttonRight.mousePressed(setM4);
-
-    return false;
-}*/
-function setM1(){mouseMove = 1; alert('You clicked up');};
-function setM2(){mouseMove = 2};
-function setM3(){mouseMove = 3};
-function setM4(){mouseMove = 4};
-
-
 
 function keyPressed() {
     if (keyIsPressed) {
@@ -377,8 +359,8 @@ function moveUp() {
     if (map[floor(((px + pDeltaX) / mapSize) + floor((py + pDeltaY) / mapSize) * mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize) / mapSize) + floor((py + pDeltaY + pSize) / mapSize) * mapX)] !== 1
         && map[floor(floor((px + pDeltaX) / mapSize) + floor((py + pDeltaY + pSize) / mapSize) * mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize) / mapSize) + floor((py + pDeltaY) / mapSize) * mapX)] !== 1) {
 
-        px += pDeltaX;
-        py += pDeltaY;
+        px += pDeltaX/window.devicePixelRatio;
+        py += pDeltaY/window.devicePixelRatio;
     }
 }
 
@@ -386,13 +368,13 @@ function moveDown() {
     if (map[(floor((py - pDeltaY) / mapSize) * mapX) + floor((px - pDeltaX) / mapSize)] !== 1 && map[(floor((py - pDeltaY + pSize) / mapSize) * mapX) + floor((px - pDeltaX + pSize) / mapSize)] !== 1
         && map[(floor((py - pDeltaY + pSize) / mapSize) * mapX) + floor((px - pDeltaX) / mapSize)] !== 1 && map[(floor((py - pDeltaY) / mapSize) * mapX) + floor((px - pDeltaX + pSize) / mapSize)] !== 1) {
 
-        px -= pDeltaX;
-        py -= pDeltaY;
+        px -= pDeltaX/window.devicePixelRatio;
+        py -= pDeltaY/window.devicePixelRatio;
     }
 }
 
 function moveRight(){
-    pAngle += 0.05;
+    pAngle += 0.08/window.devicePixelRatio;
     if (pAngle > 2 * PI) {
         pAngle -= 2 * PI;
     }
@@ -402,7 +384,7 @@ function moveRight(){
 
 
 function moveLeft(){
-    pAngle -= 0.05;
+    pAngle -= 0.08/window.devicePixelRatio;
     if (pAngle < 0) {
         pAngle += 2 * PI;
     }
