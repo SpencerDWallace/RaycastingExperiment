@@ -3,7 +3,7 @@ var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
 let mob;
-detectMob();
+//detectMob();
 
 console.log(height);
 let px = 100 + width1*0.05, py = 350 + height *0.2, pSize = 1, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
@@ -45,11 +45,11 @@ function setup(){
 }
 
 
-function detectMob() {
+/*function detectMob() {
 
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
-    if ( window.devicePixelRatio > 1.5) {
-        alert('Are you on a mobile device? Load the page in landscape for a better experience.');
+    if ( window.devicePixelRatio > 1.5 ) {
+        alert('Load the page on landscape for a better experience.');
         mob = true;
 
     }
@@ -59,7 +59,7 @@ function detectMob() {
         // width1 = window.screen.availWidth*0.8* window.devicePixelRatio;
         //height = window.screen.availHeight*0.7* window.devicePixelRatio;
     }
-}
+}*/
 
 function drawPlayer(){
     while(map[pp] > 0){
@@ -79,7 +79,7 @@ function drawPlayer(){
 
 function draw(){
 
-    background(70);
+    background(55,120,60);
     keyPressed();
 
     rect(width1, 0, width1, height);
@@ -89,10 +89,11 @@ function draw(){
     drawPlayer();
     noStroke();
 
-    fill('rgba(10%,10%,10%,0.2)')
+    fill('rgba(50%,70%,55%,0.5)')
     circle(jStkOX, jStkOY, jStickDiam + 25)
-
-    fill(120);
+    strokeWeight(2);
+    stroke(255);
+    fill(170,250,200);
     circle(jStkX, jStkY, jStickDiam);
     fill(0);
 
@@ -128,8 +129,8 @@ function joystickMovement(){
     if (pAngle < 0) {
         pAngle += 2 * PI;
     }
-    pDeltaX = cos(pAngle) * 2;
-    pDeltaY = sin(pAngle) * 2;
+    pDeltaX = cos(pAngle) * (width1/height);
+    pDeltaY = sin(pAngle) * (width1/height);
 
 
 }
@@ -188,7 +189,7 @@ function drawMap(){
     let x, y, xOffset,yOffset;
     for(y=0; y<mapY;y++){
         for(x=0; x<mapX;x++){
-            if(map[y*mapX+x] === 1){fill(170,210,290);}
+            if(map[y*mapX+x] === 1){fill(100,220,150);}
             else fill(80,70,50);
             stroke(150);
             // strokeWeight(1);
@@ -215,7 +216,8 @@ function drawRays() {
      */
     let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
     ra = pAngle - 0.5;
-    let rr = ra;
+    let rr = 0.5;
+    let pie = 0;
 
     //for horizontal
     let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
@@ -334,22 +336,33 @@ function drawRays() {
 
         //Render 3D
         let w1 = numOfRays;
-        let ca = pAngle - rr; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
-
+        let ca = pAngle - ra; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
+        distFinal = distFinal*cos(ca);
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
         let lineOffset = height/2 - lineH/2;
-        let shading = height*1.2/lineH;
-        noStroke();
-        fill(170/shading,210/shading,290/shading);
+
+        let shading = (height/lineH)/(3*sin(pie));
+        pie += PI/numOfRays
+
+        /*if(r >= numOfRays/3 && r < (2*numOfRays)/3)*/
+        // shading += Math.abs(10*ca);
+        /*shading = distFinal*cos(ca);*/
+        strokeWeight(1);
+        stroke(80/shading,150/shading,90/shading);
+        fill(80/shading,150/shading,90/shading);
         rect(r*(width1/w1), lineOffset, width1/w1, lineH);
-        ra += 0.5/(numOfRays/2); rr += 0.5/(numOfRays/2);
+        if(rr > 2*PI)
+            rr -= 2*PI;
+        if(rr <0)
+            rr += 2*PI;
+        ra += rr/(numOfRays/2);
         if(ra > 2*PI)
             ra -= 2*PI;
         if(ra <0)
             ra += 2*PI;
 
-        strokeWeight(1);
-        stroke(255,0,0);
+        /*strokeWeight(1);
+        stroke(255,0,0);*/
         //line(px/3, py/3, rx/3, ry/3);
     }
 }
@@ -378,8 +391,8 @@ function moveRight(){
     if (pAngle > 2 * PI) {
         pAngle -= 2 * PI;
     }
-    pDeltaX = cos(pAngle) * 2;
-    pDeltaY = sin(pAngle) * 2;
+    pDeltaX = cos(pAngle) * (width1/height);
+    pDeltaY = sin(pAngle) * (width1/height);
 }
 
 function moveLeft(){
@@ -387,6 +400,6 @@ function moveLeft(){
     if (pAngle < 0) {
         pAngle += 2 * PI;
     }
-    pDeltaX = cos(pAngle) * 2;
-    pDeltaY = sin(pAngle) * 2;
+    pDeltaX = cos(pAngle) * (width1/height);
+    pDeltaY = sin(pAngle) * (width1/height);
 }
