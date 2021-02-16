@@ -1,8 +1,7 @@
 //HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
 const targetElement = document.querySelector('#map1');
 bodyScrollLock.disableBodyScroll(targetElement);
-bodyScrollLock.enableBodyScroll(targetElement);
-bodyScrollLock.clearAllBodyScrollLocks();
+
 
 var canvas;
 let width1 = $(window).width();
