@@ -6,10 +6,29 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-<div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type = text/javascript> const $body = document.querySelector('body');
+    let scrollPosition = 0;
+
+    export default {
+    enable() {
+        scrollPosition = window.pageYOffset;
+        $body.style.overflow = 'hidden';
+        $body.style.position = 'fixed';
+        $body.style.top = `-${scrollPosition}px`;
+        $body.style.width = '100%';
+        },
+    disable() {
+        $body.style.removeProperty('overflow');
+        $body.style.removeProperty('position');
+        $body.style.removeProperty('top');
+        $body.style.removeProperty('width');
+        window.scrollTo(0, scrollPosition);
+        }
+    };</script>
+
+    <script type = text/javascript src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type = text/javascript src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
     <script type = text/javascript src="./canvas.js"></script>
-</div>
+
 </body>
 </html>
