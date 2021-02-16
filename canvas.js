@@ -19,8 +19,7 @@ let jStickDiam = height *0.1, jStickRad = height *0.05;
 let jStkMid = height*0.8 + height *0.05;
 let jYcap, jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
 let jStkAngle, jStkDist;
-
-
+let mSpdO = moveSpeed = height*0.004;
 
 let map =
     [
@@ -108,18 +107,21 @@ function mousePressed(){
 }
 
 function joystickMovement(){
-    let x, y, jStkRatio;
+    let x, jStkRatio;
 
 
     x = jStkOX - jStkX;
+    y = jStkOY - jStkY;
     jStkRatio = Math.abs(x/jStickRad);
+    moveSpeed = mSpdO*Math.abs(y/jStickRad);
+    pDeltaX = cos(pAngle) * moveSpeed;
+    pDeltaY = sin(pAngle) * moveSpeed;
 
-
-    if(jStkY < jStkOY - jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
+    if(jStkY < jStkOY  && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
         moveUp();
-    else if(jStkY > jStkOY + jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
+    else if(jStkY > jStkOY  && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
         moveDown();
-    jStkRatio - 0.2;
+    jStkRatio - 0.4;
     if(jStkRatio < 0.1)
         jStkRatio = 0;
     if(x > 0)
@@ -129,8 +131,7 @@ function joystickMovement(){
     if (pAngle < 0) {
         pAngle += 2 * PI;
     }
-    pDeltaX = cos(pAngle) * (width1/height);
-    pDeltaY = sin(pAngle) * (width1/height);
+
 
 
 }
@@ -165,6 +166,7 @@ function joystickDetection(){
             jStkY = jStkOY - jStickRad * sin(jStkAngle);
             console.log(jStickRad * cos(jStkAngle))
         }
+
     }
 
     if(!mouseIsPressed){
@@ -176,10 +178,12 @@ function joystickDetection(){
 
 function keyPressed() {
     if (keyIsPressed) {
-        if (keyCode === UP_ARROW) moveUp();
-        else if (keyCode === DOWN_ARROW) moveDown();
-        else if (keyCode === LEFT_ARROW) moveLeft();
-        else if (keyCode === RIGHT_ARROW) moveRight();
+        pDeltaX = cos(pAngle) * mSpdO;
+        pDeltaY = sin(pAngle) * mSpdO;
+        if (keyIsDown(UP_ARROW)) moveUp();
+        if (keyIsDown(DOWN_ARROW)) moveDown();
+        if (keyIsDown(LEFT_ARROW)) moveLeft();
+        if (keyIsDown(RIGHT_ARROW)) moveRight();
 
     }return false;
 }
@@ -391,8 +395,8 @@ function moveRight(){
     if (pAngle > 2 * PI) {
         pAngle -= 2 * PI;
     }
-    pDeltaX = cos(pAngle) * (width1/height);
-    pDeltaY = sin(pAngle) * (width1/height);
+    pDeltaX = cos(pAngle) * mSpdO;
+    pDeltaY = sin(pAngle) * mSpdO;
 }
 
 function moveLeft(){
@@ -400,6 +404,6 @@ function moveLeft(){
     if (pAngle < 0) {
         pAngle += 2 * PI;
     }
-    pDeltaX = cos(pAngle) * (width1/height);
-    pDeltaY = sin(pAngle) * (width1/height);
+    pDeltaX = cos(pAngle) * mSpdO;
+    pDeltaY = sin(pAngle) * mSpdO;
 }
