@@ -48,7 +48,7 @@ function setup(){
 function detectMob() {
 
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
-    if ( ( window.screen.availWidth <= 1000 ) && ( window.screen.availHeight <= 800 ) ) {
+    if ( window.devicePixelRatio > 1.5) {
         alert('Load the page on landscape for a better experience.');
         mob = true;
 
