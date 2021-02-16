@@ -1,3 +1,4 @@
+//HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
 var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
@@ -17,7 +18,7 @@ let jStkOY = jStkY = height*0.8;
 let jStickDiam = height *0.1, jStickRad = height *0.05;
 let jStkMid = height*0.8 + height *0.05;
 let jYcap, jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
-let jStkAngle;
+let jStkAngle, jStkDist;
 
 
 
@@ -47,7 +48,7 @@ function setup(){
 function detectMob() {
 
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
-    if ( window.devicePixelRatio > 1.5 ) {
+    if ( ( window.screen.availWidth <= 1000 ) && ( window.screen.availHeight <= 800 ) ) {
         alert('Load the page on landscape for a better experience.');
         mob = true;
 
@@ -77,7 +78,6 @@ function drawPlayer(){
 }
 
 function draw(){
-   // width1 = $(window).width(); height = $(window).height();
 
     background(70);
     keyPressed();
@@ -100,28 +100,24 @@ function draw(){
     joystickMovement();
 }
 
+function mousePressed(){
+    let x = mouseX - jStkOX;
+    let y = mouseY - jStkOY;
+    jStkDist = Math.sqrt(x*x + y*y);
+}
+
 function joystickMovement(){
     let x, y, jStkRatio;
+
+
     x = jStkOX - jStkX;
-    y = jStkY - jStkOY;
     jStkRatio = Math.abs(x/jStickRad);
 
-    jStkAngle = atan(y/x);
-    if(jStkAngle < 0)
-        jStkAngle += 2*PI;
-    else if(jStkAngle > 2*PI)
-        jStkAngle -= 2*PI;
-    console.log(jStkAngle);
+
     if(jStkY < jStkOY - jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
         moveUp();
     else if(jStkY > jStkOY + jStickRad/2 && jStkX < jStkOX + jStickRad/2 && jStkX > jStkOX - jStickRad/2 )
         moveDown();
-    /*else if(jStkX > jStkOX + jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
-        moveRight();
-
-    else if(jStkX < jStkOX - jStickRad/2 && jStkY < jStkOY + jStickRad/2 && jStkY > jStkOY - jStickRad/2 )
-        moveLeft();
-    */
     jStkRatio - 0.2;
     if(jStkRatio < 0.1)
         jStkRatio = 0;
@@ -139,24 +135,37 @@ function joystickMovement(){
 }
 
 function joystickDetection(){
-    let d;
+
     let x;
     let y;
-    if(mouseIsPressed) {
-        x = mouseX - jStkOX;
-        y = mouseY - jStkOY;
-        x = x * x;
-        y = y * y;
-        if (Math.sqrt(x + y) > jStkMax)
-            d = false;
-        else
-            d = true;
-    }
-    if(mouseIsPressed && d){
+
+    if(mouseIsPressed && jStkDist < jStkMax) {
         jStkX = mouseX;
         jStkY = mouseY;
-
+        x = jStkOX - mouseX;
+        y = jStkOY - mouseY;
+        if(x > 0 && y > 0){
+            jStkAngle = PI/2 + Math.abs(atan(x/y));
+            console.log('x is: ' + x + ' y is: ' + y + ' angle in rads is: ' + jStkAngle);
+        }
+        else if(x < 0 && y > 0){
+            jStkAngle = Math.abs(atan(y/x));
+        }
+        else if(x > 0 && y < 0){
+            jStkAngle = PI + Math.abs(atan(y/x));
+        }
+        else if ( x < 0 && y < 0){
+            jStkAngle = 3*(PI/2) + Math.abs(atan(x/y));
+        }
+        console.log('x is: ' + x + ' y is: ' + y + ' angle in rads is: ' + jStkAngle);
+        // console.log(jStkAngle);
+        if (Math.sqrt(x*x + y*y) > jStkMax) {
+            jStkX = jStkOX + jStickRad * cos(jStkAngle);
+            jStkY = jStkOY - jStickRad * sin(jStkAngle);
+            console.log(jStickRad * cos(jStkAngle))
+        }
     }
+
     if(!mouseIsPressed){
         jStkX = jStkOX;
         jStkY = jStkOY;
@@ -173,8 +182,6 @@ function keyPressed() {
 
     }return false;
 }
-
-
 
 function drawMap(){
     let MS = floor(mapSize)
@@ -210,8 +217,6 @@ function drawRays() {
     ra = pAngle - 0.5;
     let rr = ra;
 
-
-
     //for horizontal
     let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
     for(r = 0; r < numOfRays; r++) {
@@ -241,9 +246,7 @@ function drawRays() {
         if(rx >= MS*mapX || ry >= MS*mapX)
             dof=8;
         while (dof < mapX) {
-
             mx = floor(rx / MS);
-
             my = floor(ry / MS);
             mp = floor(my * mapX + mx);
 
@@ -254,22 +257,17 @@ function drawRays() {
                 disH = distt(px - hx, py - hy);
                 dof = mapX;
             } else {
-
                 rx += xOffset;
-
                 ry += yOffset;
                 dof += 1;
             }
         }
-
         //   console.log("mp is: " + mp);
-
         /*  strokeWeight(3);
          stroke(0,255,0);
           if(r==99)
               stroke(255,0,0);
           line(px, py, rx, ry);*/
-
 
         //checking verticals
         nTan = -1 * (tan(ra));
@@ -319,32 +317,20 @@ function drawRays() {
          line(px, py, rx, ry);*/
 
         if (disV <= disH) {
-
-
             rx = vx; ry = vy;
             distFinal = disV;
-
-
         } else if (disH < disV){
-
             rx = hx;
             ry = hy;
-
             distFinal = disH;
         }
-
 
         let w = Math.abs(px - rx);
         w = w*200/(MS*mapX)
         stroke(255, 0,0);
         //strokeWeight(1);
-
         mx = floor(rx / MS);
-
         my = floor(ry / MS);
-
-
-
 
         //Render 3D
         let w1 = numOfRays;
@@ -366,8 +352,6 @@ function drawRays() {
         stroke(255,0,0);
         //line(px/3, py/3, rx/3, ry/3);
     }
-
-
 }
 
 
@@ -398,7 +382,6 @@ function moveRight(){
     pDeltaY = sin(pAngle) * 2;
 }
 
-
 function moveLeft(){
     pAngle -= 0.08/window.devicePixelRatio;
     if (pAngle < 0) {
@@ -406,11 +389,4 @@ function moveLeft(){
     }
     pDeltaX = cos(pAngle) * 2;
     pDeltaY = sin(pAngle) * 2;
-}
-
-function circlePressed(){
-    if(!mouseReleased()) {
-        if (mouseX > jStkX && mouseY > jStkY && mouseX < jStkX + height * 0.1 && mouseY < jStkY + height * 0.1)
-            return true;
-    }
 }
