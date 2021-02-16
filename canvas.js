@@ -3,7 +3,7 @@ var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
 let mob;
-detectMob();
+//detectMob();
 
 console.log(height);
 let px = 100 + width1*0.05, py = 350 + height *0.2, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
@@ -55,7 +55,7 @@ function setup(){
 }
 
 
-function detectMob() {
+/*function detectMob() {
 
     //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
     if ( window.devicePixelRatio > 1.5 ) {
@@ -69,7 +69,7 @@ function detectMob() {
         // width1 = window.screen.availWidth*0.8* window.devicePixelRatio;
         //height = window.screen.availHeight*0.7* window.devicePixelRatio;
     }
-}
+}*/
 
 function drawPlayer(){
     while(map[pp] > 0){
