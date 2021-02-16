@@ -7,8 +7,8 @@ function noScroll() {
 window.addEventListener('scroll', noScroll);
 
 var canvas;
-let width1 = $(window).width();
-let height = $(window).height();
+let width1 = window.screen.availWidth*window.devicePixelRatio;
+let height = window.screen.availHeight*window.devicePixelRatio;
 let mob;
 detectMob();
 
@@ -85,7 +85,7 @@ function drawPlayer(){
 }
 
 function draw(){
-    width1 = $(window).width(); height = $(window).height();
+   // width1 = $(window).width(); height = $(window).height();
 
     background(70);
     keyPressed();
