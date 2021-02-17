@@ -100,7 +100,7 @@ function draw(){
     rect(width1, 0, width1, height);
     drawRays();
 
-    // drawMap();
+    drawMap();
     drawPlayer();
     noStroke();
 
