@@ -100,7 +100,7 @@ function draw(){
     rect(width1, 0, width1, height);
     drawRays();
 
-    drawMap();
+    // drawMap();
     drawPlayer();
     noStroke();
 
@@ -237,16 +237,19 @@ function drawRays() {
     hx and hy are the x and y coordinates of the ray checking for horizontal contact,
     vx and vy are the x and y coordinates of the ray checking for vertical contact
      */
-    let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
-    ra = pAngle - 0.5;
-    let rr = 0.5;
-    let pie = PI/numOfRays;
+    let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 400;
+    ra = pAngle - 0.45;
+    let rr = 0.45;
+    let pie = 0;
 
     //for horizontal
     let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
     for(r = 0; r < numOfRays; r++) {
+        if(ra > 2*PI)
+            ra -= 2*PI;
+        if(ra <0)
+            ra += 2*PI;
 
-        disH = 10000, disV = 10000
         dof = 0;
         //checking horizontals
         aTan = -(1 / tan(ra));
@@ -269,7 +272,7 @@ function drawRays() {
             dof = mapX;
         }
         if(rx >= MS*mapX || ry >= MS*mapX)
-            dof=8;
+            dof= mapX;
         while (dof < mapX) {
             mx = floor(rx / MS);
             my = floor(ry / MS);
@@ -376,17 +379,15 @@ function drawRays() {
         strokeWeight(1);
         stroke(red, green, blue);
         fill(red, green, blue);
-        rect(r*(width1/w1), lineOffset, width1/w1, lineH);
+        rect(r*(width1/numOfRays), lineOffset, width1/numOfRays, lineH);
         if(rr > 2*PI)
             rr -= 2*PI;
         if(rr <0)
             rr += 2*PI;
         ra += rr/(numOfRays/2);
-        if(ra > 2*PI)
-            ra -= 2*PI;
-        if(ra <0)
-            ra += 2*PI;
 
+
+        disH = 10000, disV = 10000;
         /*strokeWeight(1);
         stroke(255,0,0);*/
         //line(px/3, py/3, rx/3, ry/3);
