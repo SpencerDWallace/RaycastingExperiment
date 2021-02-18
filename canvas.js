@@ -234,8 +234,8 @@ function drawRays() {
     vx and vy are the x and y coordinates of the ray checking for vertical contact
      */
     let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
-    ra = pAngle - 0.65;
-    let rr = 0.65;
+    ra = pAngle - 0.45;
+    let rr = 0.45;
     let pie = 0;
 
     //for horizontal
@@ -363,7 +363,7 @@ function drawRays() {
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
         let lineOffset = height/2 - lineH/2;
 
-        let shading = (width1 - rx)/height;
+        let shading = (lineH/height);
         //let shading = (height/lineH)/(5*sin(pie));
         pie += PI/numOfRays
 
