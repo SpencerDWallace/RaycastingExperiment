@@ -1,25 +1,33 @@
-//HALF_PI   PI   QUARTER_PI  TAU  TWO_PI  DEGREES  RADIANS
+/***********************************************************************************************
+ Spencer Wallace - 02/11/2021
+
+ This program renders a 3D scene of walls based off an array representing a map, the area
+ above the walls is colored as the sky and the area below the walls is colored as the ground.
+ The arrow keys can be used to move, and a thumbstick/joystick is implemented to allow for use
+ on mobile devices, but works from a desktop as well. p5.js, jQuery, and bodyScrollLock are used
+ ***********************************************************************************************/
+//HALF_PI  PI  QUARTER_PI  TWO_PI  DEGREES  RADIANS
 const targetElement = document.querySelector('#map1');
 bodyScrollLock.disableBodyScroll(targetElement);
-
 
 var canvas;
 let width1 = $(window).width();
 let height = $(window).height();
 let mob;
 //detectMob();
-
-console.log(height);
-let px = 100 + width1*0.05, py = 350 + height *0.2, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
+//variables starting with p are related to the player (can also be thought of as the camera)
+let px, py, pDeltaX = pDeltaY =  pAngle = Math.random()*6.27;
 let mapX = 20, mapY = 20; let mapSize = Math.floor(height/mapX);
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
-let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize)), pSize = 2;
+let pPosition = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize)), pSize = 2;
 let mouseMove = 0;
+//the following variables are used for the joystick, jStkOX is x origin while jStkX is current x as moved by user
 let jStkOX = jStkX = 5*width1/6;
 let jStkOY = jStkY = height*0.8;
-let jStickDiam = height *0.1, jStickRad = height *0.05;
-jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
+let jStickDiam = height *0.1, jStickRad = jStickDiam/2;
+let jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
 let jStkAngle, jStkDist;
+//movement speed for the joystick, mSpdO is the original movement speed
 let mSpdO = moveSpeed = height*0.004;
 
 let map =
@@ -70,9 +78,9 @@ function setup(){
 }*/
 
 function drawPlayer(){
-    while(map[pp] > 0){
+    while(map[pPosition] > 0){
         px = random((mapX-2)*mapSize) + mapSize, py = random((mapX-2)*mapSize) + mapSize;
-        pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize));
+        pPosition = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize));
     }
     stroke(255,255,50);
     fill(320,240,64);
@@ -129,9 +137,9 @@ function joystickMovement(){
     pDeltaX = cos(pAngle) * moveSpeed;
     pDeltaY = sin(pAngle) * moveSpeed;
 
-    if(jStkY < jStkOY  && jStkY < jStkOY + jStickRad/(3*window.devicePixelRatio))// && jStkY < jStkOY - jStickRad/(3*window.devicePixelRatio) )
+    if(jStkY < jStkOY  && jStkY < jStkOY + jStickRad/(3*window.devicePixelRatio))
         moveUp();
-    else if(jStkY > jStkOY  && jStkY > jStkOY + jStickRad/(3*window.devicePixelRatio))// && jStkY < jStkOY - jStickRad/(3*window.devicePixelRatio) )
+    else if(jStkY > jStkOY  && jStkY > jStkOY + jStickRad/(3*window.devicePixelRatio))
         moveDown();
     jStkRatio - 0.4;
     if(jStkRatio < 0.1)
@@ -153,7 +161,7 @@ function joystickDetection(){
     let x;
     let y;
 
-    if(mouseIsPressed && jStkDist < jStkMax) {
+    if(mouseIsPressed && jStkDist < jStkMax) { //jStkDist is calculated in mousePressed function
         jStkX = mouseX;
         jStkY = mouseY;
         x = jStkOX - mouseX;
@@ -178,7 +186,6 @@ function joystickDetection(){
             jStkY = jStkOY - jStickRad * sin(jStkAngle);
             console.log(jStickRad * cos(jStkAngle))
         }
-
     }
 
     if(!mouseIsPressed){
@@ -236,7 +243,7 @@ function drawRays() {
     let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
     ra = pAngle - 0.45;
     let rr = 0.45;
-    let pie = 0;
+
 
     //for horizontal
     let disH = 10000, disV = 10000, distFinal, hx = px, vx = px, hy = py, vy = py;
@@ -286,12 +293,6 @@ function drawRays() {
                 dof += 1;
             }
         }
-        //   console.log("mp is: " + mp);
-        /*  strokeWeight(3);
-         stroke(0,255,0);
-          if(r==99)
-              stroke(255,0,0);
-          line(px, py, rx, ry);*/
 
         //checking verticals
         nTan = -1 * (tan(ra));
@@ -334,12 +335,6 @@ function drawRays() {
             }
         }
 
-        /* stroke(255,0,0);
-         strokeWeight(2);
-         if(r==99)
-             stroke(0,255,0);
-         line(px, py, rx, ry);*/
-
         if (disV <= disH) {
             rx = vx; ry = vy;
             distFinal = disV;
@@ -349,58 +344,47 @@ function drawRays() {
             distFinal = disH;
         }
 
-        let w = Math.abs(px - rx);
-        w = w*200/(MS*mapX)
-        stroke(255, 0,0);
-        //strokeWeight(1);
-        mx = floor(rx / MS);
-        my = floor(ry / MS);
-
         //Render 3D
-        let w1 = numOfRays;
+
+        /*calculate wall height, ca is current ray angle in relation to the player angle, lineH is the
+        height of the line to be drawn, lineOffset is the starting y coordinate for the wall to be drawn from*/
         let ca = pAngle - ra; if(ca < 0) ca += 2*PI; if (ca > 2*PI) ca -= 2*PI;
-        distFinal = distFinal*cos(ca);
+        distFinal = distFinal*Math.cos(ca);
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
         let lineOffset = height/2 - lineH/2;
 
-        let shading = (lineH/height);
-        //let shading = (height/lineH)/(5*sin(pie));
-        pie += PI/numOfRays
-
-        /*if(r >= numOfRays/3 && r < (2*numOfRays)/3)*/
-        // shading += Math.abs(10*ca);
-        //shading = distFinal*cos(ca);
-        let red = 120/shading; if(red > 170) red = 170;
-        let green = 200/shading; if(green > 250) green = 250;
-        let blue = 170/shading; if(blue > 200) blue = 200;
-
+        //walls
+        let shading = (width1*window.devicePixelRatio/(rx*2));
+        let red = 170/shading; if(red > 170) red = 170;
+        let green = 250/shading; if(green > 250) green = 250;
+        let blue = 200/shading; if(blue > 200) blue = 200;
         strokeWeight(1);
         stroke(red, green, blue);
         fill(red, green, blue);
         rect(r*(width1/numOfRays), lineOffset, width1/numOfRays, lineH);
 
+        //sky
         fill('rgb(45%,80%,100%)');
         stroke('rgb(45%,80%,100%)');
         rect(r*(width1/numOfRays), 0, width1/numOfRays, lineOffset);
+
+        //ground
         fill(100,70,50);
         stroke(100,70,50);
         rect(r*(width1/numOfRays), lineOffset + lineH, width1/numOfRays, height - (lineOffset + lineH));
+
         if(rr > 2*PI)
             rr -= 2*PI;
         if(rr <0)
             rr += 2*PI;
         ra += rr/(numOfRays/2);
-
-
         disH = 10000, disV = 10000;
-        /*strokeWeight(1);
-        stroke(255,0,0);*/
-        //line(px/3, py/3, rx/3, ry/3);
+
     }
 }
 
-
 function moveUp() {
+
     if (map[floor(((px + pDeltaX) / mapSize) + floor((py + pDeltaY) / mapSize) * mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize) / mapSize) + floor((py + pDeltaY + pSize) / mapSize) * mapX)] !== 1
         && map[floor(floor((px + pDeltaX) / mapSize) + floor((py + pDeltaY + pSize) / mapSize) * mapX)] !== 1 && map[floor(floor((px + pDeltaX + pSize) / mapSize) + floor((py + pDeltaY) / mapSize) * mapX)] !== 1) {
 
