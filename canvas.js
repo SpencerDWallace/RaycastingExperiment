@@ -20,15 +20,16 @@ let px, py, pDeltaX = pDeltaY =  pAngle = Math.random()*6.27;
 let mapX = 20, mapY = 20; let mapSize = Math.floor(height/mapX);
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
 let pPosition = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize)), pSize = 2;
-let mouseMove = 0;
+
 //the following variables are used for the joystick, jStkOX is x origin while jStkX is current x as moved by user
 let jStkOX = jStkX = 5*width1/6;
 let jStkOY = jStkY = height*0.8;
 let jStickDiam = height *0.1, jStickRad = jStickDiam/2;
 let jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
 let jStkAngle, jStkDist;
+
 //movement speed for the joystick, mSpdO is the original movement speed
-let mSpdO = moveSpeed = height*0.004;
+let moveSpeed = height*0.004, mSpdO = moveSpeed;
 
 //20x20 map
 let map =
@@ -63,7 +64,6 @@ function setup(){
 
 
 }
-
 
 /*function detectMob() {
 
@@ -121,8 +121,7 @@ function mousePressed(){
 }
 
 function joystickMovement(){
-    let x, jStkRatio;
-
+    let x, y, jStkRatio;
 
     x = jStkOX - jStkX;
     y = jStkOY - jStkY;
@@ -162,7 +161,6 @@ function joystickDetection(){
         y = jStkOY - mouseY;
         if(x > 0 && y > 0){
             jStkAngle = PI/2 + Math.abs(atan(x/y));
-            console.log('x is: ' + x + ' y is: ' + y + ' angle in rads is: ' + jStkAngle);
         }
         else if(x < 0 && y > 0){
             jStkAngle = Math.abs(atan(y/x));
@@ -173,12 +171,9 @@ function joystickDetection(){
         else if ( x < 0 && y < 0){
             jStkAngle = 3*(PI/2) + Math.abs(atan(x/y));
         }
-        console.log('x is: ' + x + ' y is: ' + y + ' angle in rads is: ' + jStkAngle);
-        // console.log(jStkAngle);
         if (Math.sqrt(x*x + y*y) > jStkMax) {
             jStkX = jStkOX + jStickRad * cos(jStkAngle);
             jStkY = jStkOY - jStickRad * sin(jStkAngle);
-            console.log(jStickRad * cos(jStkAngle))
         }
     }
 
@@ -221,7 +216,6 @@ function drawMap(){
 
 function distt(a, b){
     let d = (Math.sqrt(a*a + b*b))
-    // console.log("sqrt is: " + d)
     return d;
 }
 
@@ -279,7 +273,6 @@ function drawRays() {
             mp = floor(my * mapX + mx);
 
             if (mp >= 0 && mp < mapX * mapY && map[mp] > 0) {
-                //log("mp horiz is: " + mp);
                 hx = rx;
                 hy = ry;
                 disH = distt(px - hx, py - hy);
@@ -320,7 +313,6 @@ function drawRays() {
             my = floor(ry / MS);
             mp = floor(my * mapX + mx);
             if (mp >= 0 && mp < mapX * mapY && map[mp] > 0) {
-                // console.log("mp vert is: " + mp);
                 vx = rx;
                 vy = ry;
                 disV = distt(px - vx, py - vy);
