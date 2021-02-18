@@ -30,6 +30,7 @@ let jStkAngle, jStkDist;
 //movement speed for the joystick, mSpdO is the original movement speed
 let mSpdO = moveSpeed = height*0.004;
 
+//20x20 map
 let map =
     [
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
