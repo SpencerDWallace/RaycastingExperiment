@@ -12,16 +12,13 @@ let mob;
 console.log(height);
 let px = 100 + width1*0.05, py = 350 + height *0.2, pDeltaX = pDeltaY =  pAngle = Math.random()*6.28;
 let mapX = 20, mapY = 20; let mapSize = Math.floor(height/mapX);
-let screenWidth  = width1 - (mapSize*mapX) - 5, screenX = mapSize*mapX;
 px = Math.random((mapX-2)*mapSize), py = px = Math.random((mapX-2)*mapSize);
 let pp = Math.floor(Math.floor(py/mapSize)* mapX + Math.floor(px/mapSize)), pSize = 2;
 let mouseMove = 0;
-let joystick;
 let jStkOX = jStkX = 5*width1/6;
 let jStkOY = jStkY = height*0.8;
 let jStickDiam = height *0.1, jStickRad = height *0.05;
-let jStkMid = height*0.8 + height *0.05;
-let jYcap, jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
+jStkMax = Math.sqrt(jStickRad*jStickRad*window.devicePixelRatio);
 let jStkAngle, jStkDist;
 let mSpdO = moveSpeed = height*0.004;
 
@@ -61,18 +58,15 @@ function setup(){
 
 /*function detectMob() {
 
-    //alert('innerHeight is: ' + window.screen.availHeight + ' and innerWidth is: ' + window.screen.availWidth);
+    console.log('Height is: ' + window.screen.availHeight + ' and Width is: ' + window.screen.availWidth);
     if ( window.devicePixelRatio > 1.5 ) {
         alert('Load the page on landscape for a better experience.');
         mob = true;
-
     }
     else{
-        // alert('Device is NOT mobile.');
+        // alert('Device is not mobile.');
         mob = false;
-        // width1 = window.screen.availWidth*0.8* window.devicePixelRatio;
-        //height = window.screen.availHeight*0.7* window.devicePixelRatio;
-    }
+      }
 }*/
 
 function drawPlayer(){
@@ -89,12 +83,11 @@ function drawPlayer(){
     stroke(255,0,0);
     strokeWeight(2);
     line(px/3 + pSize/2,py/3 + pSize/2,px/3 +pDeltaX*(mapSize*2/mapX),py/3 + pDeltaY*(mapSize*2/mapX));
-
 }
 
 function draw(){
 
-    background(55,120,60);
+    // background('rgb(45%,80%,100%)');
     keyPressed();
 
     rect(width1, 0, width1, height);
@@ -104,11 +97,13 @@ function draw(){
     drawPlayer();
     noStroke();
 
-    fill('rgba(50%,70%,55%,0.5)')
+    fill('rgba(55%,60%,65%,0.5)');
+    //fill('rgba(15%,15%,15%,0.5)');
     circle(jStkOX, jStkOY, jStickDiam + 25)
     strokeWeight(2);
     stroke(255);
-    fill(170,250,200);
+    fill(80);
+    //fill(270,210,300);
     circle(jStkX, jStkY, jStickDiam);
     fill(0);
     noStroke();
@@ -208,14 +203,16 @@ function keyPressed() {
 }
 
 function drawMap(){
+    strokeWeight(0);
+    noStroke();
     let MS = floor(mapSize)
     let x, y, xOffset,yOffset;
     for(y=0; y<mapY;y++){
         for(x=0; x<mapX;x++){
             if(map[y*mapX+x] === 1){fill(100,220,150);}
             else fill(80,70,50);
-            stroke(150);
-            // strokeWeight(1);
+            //stroke(150);
+
             xOffset = floor(x*MS/3); yOffset = floor(y*MS/3);
             rect(xOffset,yOffset, MS/3,MS/3);
         }
@@ -237,9 +234,9 @@ function drawRays() {
     hx and hy are the x and y coordinates of the ray checking for horizontal contact,
     vx and vy are the x and y coordinates of the ray checking for vertical contact
      */
-    let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 400;
-    ra = pAngle - 0.45;
-    let rr = 0.45;
+    let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
+    ra = pAngle - 0.65;
+    let rr = 0.65;
     let pie = 0;
 
     //for horizontal
@@ -367,19 +364,28 @@ function drawRays() {
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
         let lineOffset = height/2 - lineH/2;
 
-        let shading = (height/lineH)/(5*sin(pie));
+        let shading = height/lineH
+        //let shading = (height/lineH)/(5*sin(pie));
         pie += PI/numOfRays
 
         /*if(r >= numOfRays/3 && r < (2*numOfRays)/3)*/
         // shading += Math.abs(10*ca);
-        /*shading = distFinal*cos(ca);*/
-        let red = 80/shading; if(red > 170) red = 170;
-        let green = 150/shading; if(green > 250) green = 250;
-        let blue = 90/shading; if(blue > 200) blue = 200;
+        //shading = distFinal*cos(ca);
+        let red = 120/shading; if(red > 170) red = 170;
+        let green = 200/shading; if(green > 250) green = 250;
+        let blue = 170/shading; if(blue > 200) blue = 200;
+
         strokeWeight(1);
         stroke(red, green, blue);
         fill(red, green, blue);
         rect(r*(width1/numOfRays), lineOffset, width1/numOfRays, lineH);
+
+        fill('rgb(45%,80%,100%)');
+        stroke('rgb(45%,80%,100%)');
+        rect(r*(width1/numOfRays), 0, width1/numOfRays, lineOffset);
+        fill(100,70,50);
+        stroke(100,70,50);
+        rect(r*(width1/numOfRays), lineOffset + lineH, width1/numOfRays, height - (lineOffset + lineH));
         if(rr > 2*PI)
             rr -= 2*PI;
         if(rr <0)
