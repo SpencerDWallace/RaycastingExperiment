@@ -85,9 +85,6 @@ function drawPlayer(){
     }
     stroke(255,255,50);
     fill(320,240,64);
-    //square(px,py, pSize);
-    //strokeWeight(1);
-    // fill(255,0,0);
     square(px/3,py/3,pSize);
     stroke(255,0,0);
     strokeWeight(2);
@@ -96,25 +93,21 @@ function drawPlayer(){
 
 function draw(){
 
-    // background('rgb(45%,80%,100%)');
     keyPressed();
-
+    mousePressed();
     rect(width1, 0, width1, height);
     drawRays();
-
     drawMap();
     drawPlayer();
-    noStroke();
 
+    noStroke();
     fill('rgba(55%,60%,65%,0.5)');
-    //fill('rgba(15%,15%,15%,0.5)');
     circle(jStkOX, jStkOY, jStickDiam + 25)
+
     strokeWeight(2);
     stroke(255);
     fill(80);
-    //fill(270,210,300);
     circle(jStkX, jStkY, jStickDiam);
-    fill(0);
     noStroke();
 
     joystickDetection();
@@ -233,14 +226,17 @@ function distt(a, b){
 }
 
 function drawRays() {
-    /*mx is used for the column px is in, my is used for the row py is in,
-    mp used for the block (index of map array) that the player is in,
+    /*********************************************************************************
+    r is the iteration count for the loop
+     mx is used for the column px is in, my is used for the row py is in,
+    mp is used for the block (index of map array) that the player is in,
     dof is for depth of field, rx is ray's x, ry is ray's y, ra is ray's angle,
-    MS is the length-slash-width of each block, disH and disV are the distance
-    the rays had to travel before hitting an object, set to 10000 as default,
+    MS is the squared size of each block, disH and disV are the distance
+    the rays had to travel before hitting an object, set to 10000 as default, distFinal
+     is the lesser value between disH and disV.
     hx and hy are the x and y coordinates of the ray checking for horizontal contact,
     vx and vy are the x and y coordinates of the ray checking for vertical contact
-     */
+     *********************************************************************************/
     let r, mx, my, mp, dof, rx, ry, ra, xOffset, yOffset, aTan, MS = floor(mapSize), numOfRays = 300;
     ra = pAngle - 0.45;
     let rr = 0.45;
@@ -382,6 +378,7 @@ function drawRays() {
         disH = 10000, disV = 10000;
 
     }
+
 }
 
 function moveUp() {
