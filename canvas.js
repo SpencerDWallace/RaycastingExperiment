@@ -203,15 +203,14 @@ function keyPressed() {
 }
 
 function drawMap(){
-    strokeWeight(0);
-    noStroke();
+    strokeWeight(1);
     let MS = floor(mapSize)
     let x, y, xOffset,yOffset;
     for(y=0; y<mapY;y++){
         for(x=0; x<mapX;x++){
             if(map[y*mapX+x] === 1){fill(100,220,150);}
             else fill(80,70,50);
-            //stroke(150);
+            stroke(150);
 
             xOffset = floor(x*MS/3); yOffset = floor(y*MS/3);
             rect(xOffset,yOffset, MS/3,MS/3);
@@ -364,7 +363,7 @@ function drawRays() {
         let lineH = (MS*height)/distFinal; if(lineH > height) lineH = height;
         let lineOffset = height/2 - lineH/2;
 
-        let shading = height/lineH
+        let shading = (width1 - rx)/height;
         //let shading = (height/lineH)/(5*sin(pie));
         pie += PI/numOfRays
 
