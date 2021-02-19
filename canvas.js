@@ -169,7 +169,7 @@ function joystickDetection(){
         if (Math.sqrt(x*x + y*y) > jStkMax) {
             jStkX = jStkOX + jStickRad * cos(jStkAngle);
             jStkY = jStkOY - jStickRad * sin(jStkAngle);
-            console.log(jStickRad * cos(jStkAngle))
+            //console.log(jStickRad * cos(jStkAngle))
         }
     }
     if(!mouseIsPressed){
