@@ -52,6 +52,7 @@ let map =
 
 
 function setup(){
+    alert("Use the arrow keys or click and drag the joystick to move.");
     canvas = createCanvas(width1, height);
     canvas.position(0,0);
 }
